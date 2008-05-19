@@ -1,0 +1,39 @@
+WorklingMailer
+==============
+
+This plugin provides a module which - when included into an ActionMailer subclass - pushes all emails that would normally be delivered synchronously into a queue for asynchronous processing. For queuing it relies on the workling plugin (http://github.com/purzelrakete/workling) which can handle for example twitter's starling as a queue server.
+
+How it works
+============
+
+The plugin provides a module AsynchMail. To make a mailer use a queue simply include it into the class like this:
+
+class MyMailer < ActionMailer::Base
+	include AsynchMail
+end
+
+This dynamically creates a workling worker for the mailer. From now on all MyMailer.deliver_whatever_email calls create an entry in the corresponding queue and should be processed by a worker. If you still want to deliver mail sycnhronously add a bang to the method call: MyMailer.deliver_whatever_email!
+
+Installation
+============
+
+If you are on rails edge (which supports git) you can simply do a 
+script/plugin install git://github.com/langalex/workling_mailer.git
+
+If not you need to do this from your rails root:
+
+cd vendor/plugins
+git clone git://github.com/langalex/workling_mailer.git --depth 1
+cd ../../..
+
+Credits
+=======
+
+Parts of the code (the method_missing implementation) were taken from the mail_queue plugin (http://code.google.com/p/mail-queue/) which queues emails in a database table.
+
+Contact
+=======
+
+Copyright (c) 2008 Alexander Lang, released under the MIT license
+
+Contact: email: alex[at]upstream-berlin.com, twitter: langalex, blog: http://upstream-berlin.com/blog, skype: langalex

@@ -1,0 +1,1 @@
+require 'asynch_mail'
