@@ -1,7 +1,7 @@
 WorklingMailer
 ==============
 
-This plugin provides a module which - when included into an ActionMailer subclass - pushes all emails that would normally be delivered synchronously into a queue for asynchronous processing. For queuing it relies on the workling plugin (http://github.com/purzelrakete/workling) which can handle for example twitter's starling as a queue server.
+This plugin provides a module which - when included into an ActionMailer subclass - pushes all emails that would normally be delivered synchronously into a queue for asynchronous processing. For queuing it relies on the workling plugin (http://github.com/purzelrakete/workling) which can use for example twitter's starling as a queue server.
 
 How it works
 ============
@@ -12,7 +12,7 @@ class MyMailer < ActionMailer::Base
 	include AsynchMail
 end
 
-This dynamically creates a workling worker for the mailer. From now on all MyMailer.deliver_whatever_email calls create an entry in the corresponding queue and should be processed by a worker. If you still want to deliver mail sycnhronously add a bang to the method call: MyMailer.deliver_whatever_email!
+From now on all MyMailer.deliver_whatever_email calls create an entry in the MailerWorker.deliver_mail corresponding queue and should be processed by a worker. If you still want to deliver mail sycnhronously add a bang to the method call: MyMailer.deliver_whatever_email!
 
 Installation
 ============
